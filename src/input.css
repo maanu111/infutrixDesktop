@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.floating-icon {
+  animation: float 3s ease-in-out infinite;
+}
+.floating-icon:nth-child(odd) {
+  animation-delay: -1.5s;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.tech-icon {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+body {
+  background: linear-gradient(
+    135deg,
+    #1e293b 0%,
+    #334155 50%,
+    #1e293b 100%
+  ) !important;
+}
