@@ -236,40 +236,42 @@
       }
       .slide-container {
         display: flex;
-        gap: 0;
+        gap: 0 !important;
         align-items: center;
         animation: slideLoop 40s linear infinite;
         will-change: transform;
+        transform: translateZ(0);
       }
       #industry-slider {
+        padding: 0;
         will-change: transform;
         transform: translateZ(0);
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
       }
-      .carousel-card-animated {
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-      }
+
       @keyframes slideLoop {
         from {
           transform: translateX(0);
         }
         to {
-          transform: translateX(-50%);
+          transform: translateX(50%);
         } /* seamless because of duplication */
       }
 
       .carousel-card-animated {
-        min-height: 500px;
-        width: 280px;
-        margin: 0;
-        flex-shrink: 0;
+        width: 400px;
+        flex: 0 0 auto;
         transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother easing */
         filter: grayscale(80%);
         opacity: 0.6;
+        transform: translateZ(0);
         transform: scale(0.8);
-        transform-origin: center center; /* Reduce non-active scale to make active more prominent */
+        height: 80vh;
+        min-height: 80vh;
+        transform-origin: center center;
+        will-change: transform;
+        backface-visibility: hidden;
       }
       .carousel-card-animated.active {
         filter: grayscale(0%);
@@ -282,25 +284,195 @@
         box-sizing: content-box;
       }
       .carousel-card-animated img {
-        padding: 0;
-        max-width: 120%;
-        max-height: 100%;
-        object-fit: contain;
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover; /* fills without spacing */
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
       .carousel-card-animated .h-32 {
-        margin-left: -24px; /* Touch left edge */
-        margin-right: -24px; /* Touch right edge */
-        margin-top: -24px; /* Touch top edge */
-        width: calc(100% + 48px); /* Full card width */
-        border-radius: 12px 12px 8px 8px;
+        margin: 0;
+        width: 100%;
+        height: 50%; /* full card height */
+        border-radius: 0;
+        padding: 0;
         overflow: hidden;
-        transition: all 0.5s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
       .carousel-card-animated.active .h-32 {
         transform: scale(1); /* Full size when active to touch boundaries */
+      }
+      .hover-card {
+        transition: transform 0.3s ease;
+      }
+
+      .hover-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .video-container video {
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+      }
+
+      .hover-card:hover .video-container video {
+        opacity: 1;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .marquee-track {
+        display: inline-flex;
+        animation: marquee 15s linear infinite;
+      }
+
+      .faq-body {
+        display: none;
+      }
+      .faq-marquee {
+        display: none; /* Hide marquee by default */
+      }
+
+      .faq-card.open .faq-body {
+        display: block;
+      }
+      /* Hide marquee when open */
+      .faq-card.open .faq-marquee {
+        display: none;
+      }
+      .faq-toggle svg {
+        transition: transform 0.28s ease;
+        transform-origin: center;
+      }
+      /* Rotate arrow up when open */
+      .faq-card.open .faq-toggle svg {
+        transform: rotate(180deg);
+      }
+
+      .faq-card .faq-header {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .faq-card .faq-header {
+        cursor: pointer;
+        user-select: none;
+      }
+      .team-content {
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .team-content.slide-in-left {
+        animation: slideInLeft 0.6s ease-out forwards;
+      }
+
+      .team-content.slide-in-right {
+        animation: slideInRight 0.6s ease-out forwards;
+      }
+
+      .team-image {
+        transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .team-image.scale-in {
+        animation: scaleIn 0.6s ease-out forwards;
+      }
+
+      @keyframes slideInLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        0% {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes scaleIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .carousel-container {
+        overflow: visible !important;
+        position: relative;
+        z-index: 1;
+      }
+      .carousel-card-animated.active {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.1) translateY(-10px);
+        z-index: 50; /* High z-index to appear above other elements */
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        position: relative; /* Needed for z-index to work */
+      }
+
+      /* Make sure the industry section allows overflow */
+      .industry-section {
+        overflow: visible !important;
+      }
+      body {
+        overflow-x: hidden; /* Only hide horizontal overflow to prevent page scrolling */
+        overflow-y: visible;
+      }
+      /* Simple universal fix for all carousel cards */
+      .carousel-card-animated {
+        text-align: center; /* center all text */
+      }
+
+      .carousel-card-animated ul {
+        text-align: center; /* center list text */
+      }
+
+      .carousel-card-animated ul li {
+        justify-content: center; /* center bullet + text */
+      }
+
+      .carousel-card-animated button {
+        display: block;
+        margin: 0 auto; /* center button */
+      }
+      /* Make all carousel buttons consistent like Mining card */
+      .carousel-card-animated button {
+        display: block;
+        margin: 0 auto; /* center */
+        width: 100%; /* full width inside card */
+        max-width: 300px; /* optional limit so it's not too wide */
+        background-color: #f97316; /* orange-500 */
+        color: #fff;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 0.5rem; /* rounded-lg */
+        padding: 12px 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      .carousel-card-animated button:hover {
+        background-color: #ea580c; /* orange-600 */
       }
     </style>
   </head>
@@ -787,14 +959,14 @@
 
         <!-- Industry Cards Carousel -->
         <div
-          class="relative overflow-hidden mb-12 h-[580px] flex items-center justify-center"
+          class="relative overflow-visible mb-12 flex items-center justify-center"
         >
           <div class="slide-container animate-slide" id="industry-slider">
             <!-- ORIGINAL 9 CARDS (in tab order) -->
 
             <!-- 1. Social Media & Marketing -->
             <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg active"
+              class="carousel-card-animated bg-white rounded-xl shadow-lg active"
             >
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
@@ -834,15 +1006,11 @@
             </div>
 
             <!-- 2. Education -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Education
-                </div>
+                <img src="../public/edu.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Education</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -873,15 +1041,11 @@
             </div>
 
             <!-- 3. Ecommerce -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Ecommerce
-                </div>
+                <img src="../public/ecom.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Ecommerce</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -912,15 +1076,11 @@
             </div>
 
             <!-- 4. Oil & Gas -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Oil & Gas
-                </div>
+                <img src="../public/oil.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Oil & Gas</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -951,15 +1111,11 @@
             </div>
 
             <!-- 5. Manufacturing -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Manufacturing
-                </div>
+                <img src="../public/manuf.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Manufacturing</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -990,13 +1146,11 @@
             </div>
 
             <!-- 6. BFSI -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">BFSI</div>
+                <img src="../public/bfsi.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">BFSI</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1027,15 +1181,11 @@
             </div>
 
             <!-- 7. Healthcare -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Healthcare
-                </div>
+                <img src="../public/health.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Healthcare</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1066,15 +1216,11 @@
             </div>
 
             <!-- 8. Energy Sector -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Energy Sector
-                </div>
+                <img src="../public/es.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Energy Sector</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1105,18 +1251,14 @@
             </div>
 
             <!-- 9. Mining -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Mining
-                </div>
+                <img src="../public/mine.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Mining</h3>
-              <ul class="space-y-2 text-sm text-gray-700 mb-6">
+              <h3 class="font-normal text-2xl mb-3 mt-4 text-center">Mining</h3>
+              <ul class="space-y-2 text-md text-gray-700 mb-6">
                 <li class="flex items-start space-x-2">
                   <div
                     class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
@@ -1137,7 +1279,7 @@
                 </li>
               </ul>
               <button
-                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-colors w-full"
+                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-colors"
               >
                 Talk To An Expert
               </button>
@@ -1146,9 +1288,7 @@
             <!-- DUPLICATE SET (exact same order for seamless loop) -->
 
             <!-- Duplicate 1. Social Media & Marketing -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
@@ -1187,15 +1327,11 @@
             </div>
 
             <!-- Duplicate 2. Education -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Education
-                </div>
+                <img src="../public/edu.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Education</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1226,15 +1362,11 @@
             </div>
 
             <!-- Duplicate 3. Ecommerce -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Ecommerce
-                </div>
+                <img src="../public/ecom.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Ecommerce</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1265,15 +1397,11 @@
             </div>
 
             <!-- Duplicate 4. Oil & Gas -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Oil & Gas
-                </div>
+                <img src="../public/oil.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Oil & Gas</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1304,15 +1432,11 @@
             </div>
 
             <!-- Duplicate 5. Manufacturing -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Manufacturing
-                </div>
+                <img src="../public/manuf.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Manufacturing</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1343,13 +1467,11 @@
             </div>
 
             <!-- Duplicate 6. BFSI -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">BFSI</div>
+                <img src="../public/es.bfsi" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">BFSI</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1380,15 +1502,11 @@
             </div>
 
             <!-- Duplicate 7. Healthcare -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Healthcare
-                </div>
+                <img src="../public/health.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Healthcare</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1419,15 +1537,11 @@
             </div>
 
             <!-- Duplicate 8. Energy Sector -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Energy Sector
-                </div>
+                <img src="../public/es.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Energy Sector</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1458,15 +1572,11 @@
             </div>
 
             <!-- Duplicate 9. Mining -->
-            <div
-              class="carousel-card-animated bg-white rounded-xl p-6 shadow-lg"
-            >
+            <div class="carousel-card-animated bg-white rounded-xl shadow-lg">
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <div class="text-white text-xs font-bold text-center">
-                  Mining
-                </div>
+                <img src="../public/mine.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">Mining</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -1552,97 +1662,167 @@
     <!-- Team Section - Anmol Jain -->
     <section class="bg-cream pt-64 text-gray-900">
       <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <div class="relative">
+        <div class="grid grid-cols-1 lg:grid-cols-3 items-start">
+          <div class="relative col-span-2">
             <!-- Navigation arrows on the sides -->
-            <button class="absolute -left-20 top-1/3 w-12 h-12">
-              <svg
-                class="w-6 h-6 text-gray-600"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 14.707a1 1 0 01-1.414 0L7 10.414l4.293-4.293a1 1 0 111.414 1.414L9.414 10.5l3.293 3.293a1 1 0 010 1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+            <img
+              src="../public/left.png"
+              alt="Previous"
+              class="absolute -left-20 top-[75%] w-10 h-10 cursor-pointer hover:opacity-75 transition-opacity"
+              id="prev-arrow"
+            />
 
             <!-- Main heading at top -->
             <div class="mb-12">
-              <h2 class="text-4xl lg:text-5xl font-semibold leading-loose mb-4">
+              <h2
+                class="text-4xl lg:text-4xl font-semibold leading-loose mb-4 tracking-widest"
+              >
                 The Experts Who Make<br />
-                <span class="text-orange-600 font-bold text-4xl tracking-wider"
+                <span
+                  class="text-orange-600 font-bold text-4xl tracking-wide leading-loose"
                   >Innovation Possible</span
                 ><span class="text-4xl"> — Meet Them</span>
               </h2>
-              <p class="text-lg text-gray-700 tracking-wide">
+              <p class="text-lg text-gray-700 tracking-wider">
                 At Infutrix, the brightest minds from the world's most
-                prestigious institutes drive every breakthrough that creates
-                real business impact.
+                prestigious <br />
+                institutes drive every breakthrough that creates real business
+                impact.
               </p>
             </div>
 
-            <!-- Anmol Jain section -->
-            <div>
-              <h3 class="text-6xl font-semibold text-gray-900 mb-4">
+            <!-- Team Member Content - Anmol (default) -->
+            <div id="member-anmol" class="team-content">
+              <h3
+                class="text-6xl font-semibold text-gray-900 mb-4 leading-loose"
+              >
                 Anmol Jain
               </h3>
-              <div class="text-orange-500 font-bold text-3xl mb-6">CEO</div>
-
+              <div class="text-orange-500 font-bold text-4xl mb-6">CEO</div>
               <div class="text-lg text-gray-700 leading-relaxed space-y-4">
-                <p>
+                <p class="tracking-tight">
                   Anmol Jain, CEO of Infutrix, is a dynamic leader with a vision
-                  to transform businesses through innovation and technology.
-                  With a strong foundation in fintech core expertise—AI, SaaS,
-                  digital transformation, etc.), Anmol has led Infutrix to
-                  become a trusted name in delivering scalable, future-ready
-                  solutions across industries.
+                  to transform businesses <br />
+                  through innovation and technology. With a strong foundation in
+                  fintech core expertise—AI, <br />
+                  SaaS, digital transformation, etc.), Anmol has led Infutrix to
+                  become a trusted name in <br />
+                  delivering scalable, future-ready solutions across industries.
                 </p>
-                <p>
+                <p class="tracking-tight">
                   His leadership philosophy blends strategic foresight with
-                  executional excellence. His focus on innovation, process
-                  optimization, and long-term value creation makes him an
-                  integral part of Infutrix's leadership.
+                  executional excellence. His focus <br />
+                  on innovation, process optimization, and long-term value
+                  creation makes him an integral<br />
+                  part of Infutrix's leadership.
+                </p>
+              </div>
+            </div>
+
+            <!-- Team Member Content - Zoya (hidden initially) -->
+            <!-- Team Member Content - Zoya (hidden initially) -->
+            <div id="member-zoya" class="team-content" style="display: none">
+              <h3 class="text-6xl font-semibold text-gray-900 mb-4">Zoya</h3>
+              <div class="text-orange-500 font-bold text-3xl mb-6">CFO</div>
+              <div class="text-lg text-gray-700 leading-relaxed space-y-4">
+                <p class="tracking-tight">
+                  Zoya, Chief Financial Officer (CFO) at Infutrix, is the
+                  financial architect behind the <br />
+                  company's sustained growth and stability. With expertise in
+                  [insert area—corporate <br />
+                  finance, investment strategy, financial planning & analysis],
+                  she ensures Infutrix <br />
+                  maintains a strong foundation while scaling its operations
+                  globally.
+                </p>
+                <p class="tracking-tight">
+                  Her strategic financial planning and risk management expertise
+                  have been instrumental <br />
+                  in positioning Infutrix for long-term success.
+                </p>
+              </div>
+            </div>
+            <!-- Team Member Content - Abhishek (hidden initially) -->
+            <div
+              id="member-abhishek"
+              class="team-content"
+              style="display: none"
+            >
+              <h3 class="text-6xl font-semibold text-gray-900 mb-4">
+                Abhishek
+              </h3>
+              <div class="text-orange-500 font-bold text-3xl mb-6">
+                Director
+              </div>
+              <div class="text-lg text-gray-700 leading-relaxed space-y-4">
+                <p class="tracking-tight">
+                  Abhishek, Director at Infutrix, is a strategic leader who
+                  plays a key role in steering <br />
+                  the company's vision toward innovation and sustainable growth.
+                  With deep <br />
+                  expertise in [insert area—business development, operations, or
+                  technology <br />
+                  leadership],
+                </p>
+                <p class="tracking-tight">
+                  Abhishek ensures Infutrix consistently delivers high-quality,
+                  future-ready solutions <br />
+                  to clients across industries.
                 </p>
               </div>
             </div>
           </div>
 
           <!-- Right Side -->
-          <div class="flex flex-col items-center">
+          <div class="flex flex-col items-center relative">
             <!-- Right arrow -->
-            <button
-              class="absolute right-[-80px] top-1/3 w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center"
-            >
-              <svg
-                class="w-6 h-6 text-gray-600"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+            <img
+              src="../public/right.png"
+              alt="Next"
+              class="absolute -right-12 top-[70%] w-8 h-8 cursor-pointer hover:opacity-75 transition-opacity"
+              id="right-arrow"
+            />
 
             <!-- Profile Image -->
+            <!-- Profile Image -->
+            <!-- Profile Image -->
             <div
-              class="w-80 h-96 rounded-xl mb-8 flex items-center justify-center"
+              class="w-[350px] h-[70vh] rounded-xl flex items-center justify-center"
             >
-              <img src="../public/anmolb.png" alt="" />
+              <!-- Anmol Image -->
+              <img
+                src="../public/anmolb.png"
+                alt="Anmol Jain"
+                id="member-image-anmol"
+                class="w-full h-full object-cover rounded-xl team-image"
+              />
+
+              <!-- Zoya Image -->
+              <img
+                src="../public/zoya.png"
+                alt="Zoya"
+                id="member-image-zoya"
+                class="w-full h-full object-cover rounded-xl team-image"
+                style="display: none"
+              />
+
+              <!-- Abhishek Image -->
+              <img
+                src="../public/ab.png"
+                alt="Abhishek"
+                id="member-image-abhishek"
+                class="w-full h-full object-cover rounded-xl team-image"
+                style="display: none"
+              />
             </div>
 
             <!-- Bottom section with text and button -->
-            <div class="text-center">
-              <p class="text-lg font-medium text-gray-900 mb-6 italic max-w-sm">
+            <div class="text-center bg-white rounded-2xl p-6">
+              <p class="text-lg font-bold text-gray-900 mb-6 italic max-w-sm">
                 Reserve your spot with the minds who make breakthroughs happen.
               </p>
               <button
-                class="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-xl font-bold text-lg"
+                class="bg-orange-600 hover:bg-orange-700 text-white px-10 py-3 rounded-lg font-bold text-lg"
               >
                 Consult Now
               </button>
@@ -1653,102 +1833,112 @@
     </section>
 
     <!-- Reasons To Trust INFUTRIX Section -->
-    <section class="bg-cream py-16 px-6 text-gray-900">
+    <section class="bg-cream pt-60 px-6 text-gray-900">
       <div class="max-w-7xl mx-auto text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">
-          Reasons To Trust <span class="text-orange-500">INFUTRIX</span> For
-          Your <span class="text-orange-500">Next Project</span>
+        <h2 class="text-3xl md:text-5xl font-semibold mb-6 tracking-wide">
+          Reasons To Trust
+          <span class="text-black font-bold"
+            >IN<span class="text-orange-600">FUT</span><span>RIX</span></span
+          >
+          For Your
+          <span class="text-orange-600 font-bold">Next Project</span>
         </h2>
-        <p class="text-lg text-gray-700 mb-16 max-w-4xl mx-auto">
+        <p class="text-lg text-gray-700 mb-16 max-w-4xl mx-auto tracking-wide">
           Guided by a disciplined approach and experience to build solutions
-          across industries and business-stages, showing why clients trust us.
+          across industries and <br />
+          business-stages, showing why clients trust us.
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-6">
           <!-- Leading Innovation -->
-          <div class="text-left">
-            <div class="w-12 h-12 mb-6">
-              <svg
-                class="w-12 h-12 text-orange-500"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                />
-              </svg>
+          <div
+            class="text-left hover-card group cursor-pointer p-6 px-4 pb-14 bg-creme rounded-lg shadow-md transition-colors duration-500 hover:bg-orange-600"
+          >
+            <div
+              class="w-12 h-12 mb-6 video-container relative overflow-hidden rounded"
+            >
+              <img
+                src="./public/1st.gif"
+                alt="leading innovation"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-bold mb-4">
+            <h3
+              class="text-2xl font-bold mb-4 group-hover:text-white tracking-wider"
+            >
               Leading Innovation<br />With IITian Expertise
             </h3>
-            <p class="text-gray-700 leading-relaxed">
+            <p
+              class="text-gray-700 leading-relaxed group-hover:text-white tracking-wider"
+            >
               We don't just develop solutions, but manage the most complex
               challenges with elite engineering minds spearheaded by IIT-alumni.
             </p>
           </div>
 
           <!-- 50+ Years -->
-          <div class="text-left">
-            <div class="w-12 h-12 mb-6">
-              <svg
-                class="w-12 h-12 text-orange-500"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                />
-              </svg>
+
+          <div
+            class="text-left hover-card group cursor-pointer p-6 px-4 pb-14 bg-creme rounded-lg shadow-lg transition-colors duration-500 hover:bg-orange-600"
+          >
+            <div
+              class="w-12 h-12 mb-6 video-container relative overflow-hidden rounded"
+            >
+              <!-- Use this if your file is 1st.gif -->
+              <img
+                src="./public/2.gif"
+                alt="leading innovation"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-bold mb-4">
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-white">
               50+ Years Of<br />Combined Global<br />Leadership
             </h3>
-            <p class="text-gray-700 leading-relaxed">
+            <p class="text-gray-700 leading-relaxed group-hover:text-white">
               We leverage decades of C-suite experience across geographies to
               guide every project with strategic insight and real-world
               perspective
             </p>
           </div>
 
-          <!-- Building Path-Breaking Products -->
-          <div class="text-left">
-            <div class="w-12 h-12 mb-6">
-              <svg
-                class="w-12 h-12 text-orange-500"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"
-                />
-              </svg>
+          <div
+            class="text-left hover-card group cursor-pointer p-6 px-4 pb-14 bg-creme rounded-lg shadow-lg transition-colors duration-500 hover:bg-orange-600"
+          >
+            <div
+              class="w-12 h-12 mb-6 video-container relative overflow-hidden rounded"
+            >
+              <!-- Use this if your file is 1st.gif -->
+              <img
+                src="./public/3.gif"
+                alt="leading innovation"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-bold mb-4">
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-white">
               Building Path-<br />Breaking Products
             </h3>
-            <p class="text-gray-700 leading-relaxed">
+            <p class="text-gray-700 leading-relaxed group-hover:text-white">
               We create technology that transforms businesses, drives measurable
               impact, and curates new benchmarks in performance and usability.
             </p>
           </div>
-
-          <!-- Execute With First Principles -->
-          <div class="text-left">
-            <div class="w-12 h-12 mb-6">
-              <svg
-                class="w-12 h-12 text-orange-500"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
-                />
-              </svg>
+          <div
+            class="text-left hover-card group cursor-pointer p-6 pb-14 px-4 bg-creme rounded-lg shadow-lg transition-colors duration-500 hover:bg-orange-600"
+          >
+            <div
+              class="w-12 h-12 mb-6 video-container relative overflow-hidden rounded"
+            >
+              <!-- Use this if your file is 1st.gif -->
+              <img
+                src="./public/4.gif"
+                alt="leading innovation"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
-            <h3 class="text-xl font-bold mb-4">
+            <h3 class="text-2xl font-bold mb-4 group-hover:text-white">
               Execute With First<br />Principles And Agile<br />Precision
             </h3>
-            <p class="text-gray-700 leading-relaxed">
+            <p class="text-gray-700 leading-relaxed group-hover:text-white">
               We combine rigorous problem-solving framework with structured,
               iterative methodologies to deliver scalable, reliable results
               consistently.
@@ -1758,17 +1948,16 @@
       </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="bg-cream py-16 px-6 text-gray-900">
+    <section class="bg-cream pt-28 px-6 text-gray-900">
       <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <!-- Left Content -->
           <div>
-            <h2 class="text-4xl md:text-5xl font-normal mb-6 pt-[25%]">
+            <h2 class="text-4xl md:text-5xl font-sans mb-6 pt-[20%]">
               Frequently Asked<br />
-              <span class="text-orange-500">Questions</span>
+              <span class="text-orange-600 font-bold">Questions</span>
             </h2>
-            <p class="text-lg text-gray-700 leading-relaxed">
+            <p class="text-lg text-gray-700 leading-relaxed tracking-wider">
               At Infutrix, the brightest minds from the world's most <br />
               prestigious institutes drive every breakthrough that <br />
               creates real business impact.
@@ -1777,106 +1966,188 @@
 
           <!-- Right FAQ Items -->
           <div class="space-y-4">
-            <!-- FAQ Item 1 - Expanded -->
-            <div class="border-2 border-orange-400 rounded-2xl p-6 bg-white">
-              <div class="flex items-center justify-between mb-4">
-                <h3 class="text-xl font-semibold text-gray-900">
+            <!-- FAQ Item 1 -->
+            <div
+              class="faq-card border-2 border-orange-400 rounded-2xl p-6 bg-creme"
+            >
+              <div class="flex items-center justify-between">
+                <h3
+                  class="text-2xl font-semibold text-gray-900 tracking-wide p-4"
+                >
                   Lorem Ipsum Dolor Sit Amet
                 </h3>
                 <button
-                  class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
+                  class="faq-toggle w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center"
                 >
                   <svg
-                    class="w-5 h-5 text-white transform rotate-180"
-                    fill="currentColor"
+                    class="w-5 h-5 text-white transition-transform duration-300"
                     viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 
+      111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
                     />
                   </svg>
                 </button>
               </div>
-              <p class="text-gray-600 leading-relaxed">
+
+              <!-- Marquee -->
+              <div class="faq-marquee mt-4">
+                <div class="marquee-track whitespace-nowrap">
+                  <span class="mr-10"
+                    >Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing
+                    Elit...</span
+                  >
+                  <span class="mr-10"
+                    >Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing
+                    Elit...</span
+                  >
+                </div>
+              </div>
+
+              <!-- Full Answer -->
+              <div class="faq-body mt-4 text-gray-600 leading-relaxed">
                 Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit. Integer
                 Euismod, Nunc Vel Tincidunt Imperdiet, Nulla Risus Euismod
-                Lorem, A Varius Mi Erat Id Velit. Curabitur Viverra, Purus A
-                Facilisis Consequat, Nibh Nunc Ultricies Justo, At Congue Est
-                Augue At Magna. Suspendisse Potenti.
-              </p>
+                Lorem...
+              </div>
             </div>
 
             <!-- FAQ Item 2 -->
-            <div class="border-2 border-orange-400 rounded-2xl p-6 bg-white">
+            <div
+              class="faq-card border-2 border-orange-400 rounded-2xl p-6 bg-creme"
+            >
               <div class="flex items-center justify-between">
-                <h3 class="text-xl font-semibold text-gray-900">
+                <h3
+                  class="text-2xl font-semibold text-gray-900 tracking-wide p-4"
+                >
                   Consectetur Adipiscing Elit
                 </h3>
                 <button
-                  class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
+                  class="faq-toggle w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center"
                 >
                   <svg
-                    class="w-5 h-5 text-white"
-                    fill="currentColor"
+                    class="w-5 h-5 text-white transition-transform duration-300"
                     viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 
+      111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
                     />
                   </svg>
                 </button>
+              </div>
+
+              <div class="faq-marquee mt-4">
+                <div class="marquee-track whitespace-nowrap">
+                  <span class="mr-10"
+                    >Consectetur Adipiscing Elit — teaser content...</span
+                  >
+                  <span class="mr-10"
+                    >Consectetur Adipiscing Elit — teaser content...</span
+                  >
+                </div>
+              </div>
+
+              <div class="faq-body mt-4 text-gray-600 leading-relaxed">
+                Full answer content for "Consectetur Adipiscing Elit". Add your
+                detailed text here.
               </div>
             </div>
 
             <!-- FAQ Item 3 -->
-            <div class="border-2 border-orange-400 rounded-2xl p-6 bg-white">
+            <div
+              class="faq-card border-2 border-orange-400 rounded-2xl p-6 bg-creme"
+            >
               <div class="flex items-center justify-between">
-                <h3 class="text-xl font-semibold text-gray-900">
+                <h3
+                  class="text-2xl font-semibold text-gray-900 tracking-wide p-4"
+                >
                   Integer Euismod Nunc Vel Tincidunt
                 </h3>
                 <button
-                  class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
+                  class="faq-toggle w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center"
                 >
                   <svg
-                    class="w-5 h-5 text-white"
-                    fill="currentColor"
+                    class="w-5 h-5 text-white transition-transform duration-300"
                     viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 
+      111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
                     />
                   </svg>
                 </button>
               </div>
+
+              <div class="faq-marquee mt-4">
+                <div class="marquee-track whitespace-nowrap">
+                  <span class="mr-10"
+                    >Integer Euismod Nunc Vel Tincidunt — teaser...</span
+                  >
+                  <span class="mr-10"
+                    >Integer Euismod Nunc Vel Tincidunt — teaser...</span
+                  >
+                </div>
+              </div>
+
+              <div class="faq-body mt-4 text-gray-600 leading-relaxed">
+                Full answer content for "Integer Euismod Nunc Vel Tincidunt".
+                Add your detailed text here.
+              </div>
             </div>
 
             <!-- FAQ Item 4 -->
-            <div class="border-2 border-orange-400 rounded-2xl p-6 bg-white">
+            <div
+              class="faq-card border-2 border-orange-400 rounded-2xl p-6 bg-creme"
+            >
               <div class="flex items-center justify-between">
-                <h3 class="text-xl font-semibold text-gray-900">
+                <h3
+                  class="text-2xl font-semibold text-gray-900 tracking-wide p-4"
+                >
                   Suspendisse Potenti Donec A Lectus
                 </h3>
                 <button
-                  class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
+                  class="faq-toggle w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center"
                 >
                   <svg
-                    class="w-5 h-5 text-white"
-                    fill="currentColor"
+                    class="w-5 h-5 text-white transition-transform duration-300"
                     viewBox="0 0 20 20"
+                    fill="currentColor"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                      clipRule="evenodd"
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 
+      111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
                     />
                   </svg>
                 </button>
+              </div>
+
+              <div class="faq-marquee mt-4">
+                <div class="marquee-track whitespace-nowrap">
+                  <span class="mr-10"
+                    >Suspendisse Potenti Donec A Lectus — teaser...</span
+                  >
+                  <span class="mr-10"
+                    >Suspendisse Potenti Donec A Lectus — teaser...</span
+                  >
+                </div>
+              </div>
+
+              <div class="faq-body mt-4 text-gray-600 leading-relaxed">
+                Full answer content for "Suspendisse Potenti Donec A Lectus".
+                Add your detailed text here.
               </div>
             </div>
           </div>
@@ -1885,95 +2156,155 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="bg-navy mx-28 rounded-2xl mb-8">
-      <div class="px-8 py-16">
-        <div class="flex items-center justify-between">
-          <!-- Left Content -->
-          <div>
-            <h2
-              class="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight"
-            >
-              Let's Build Your Scalable<br />
-              Solution Today
-            </h2>
-            <!-- CTA Button -->
-            <button
-              class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors whitespace-nowrap"
-            >
-              Let's Discuss
-            </button>
-          </div>
+    <div class="bg-cream px-6 pt-36 pb-16">
+      <section class="bg-navy rounded-2xl mb-8 mx-16">
+        <div class="px-10 py-6">
+          <div class="flex items-center justify-between">
+            <!-- Left Content -->
+            <div>
+              <h2
+                class="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight"
+              >
+                Let's Build Your Scalable<br />
+                Solution Today
+              </h2>
+              <!-- CTA Button -->
+              <button
+                class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-md font-semibold text-base transition-colors whitespace-nowrap"
+              >
+                Let's Discuss
+              </button>
+            </div>
 
-          <!-- Right Content -->
-          <div class="flex items-center space-x-8">
-            <!-- Decorative circles -->
-            <div class="hidden lg:flex items-center space-x-2">
-              <div class="w-4 h-4 bg-white rounded-full"></div>
-              <div class="w-6 h-6 bg-white rounded-full"></div>
-              <div class="w-4 h-4 bg-white rounded-full"></div>
-              <div class="w-5 h-5 bg-white rounded-full"></div>
-              <div class="w-4 h-4 bg-white rounded-full"></div>
-              <div class="w-6 h-6 bg-white rounded-full"></div>
-              <div class="w-4 h-4 bg-white rounded-full"></div>
+            <!-- Right Content -->
+            <div class="flex items-center space-x-8 w-52 h-52">
+              <!-- Decorative circles -->
+              <img src="../public/dots.png" alt="dotsaniamtion" />
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-cream px-2 pb-8">
+    <footer class="bg-cream pb-8 m-auto">
       <div class="max-w-7xl mx-auto">
         <!-- Main Footer Content -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-12 mb-12 pt-16">
-          <!-- Logo and Description -->
-          <img src="../public/image.png" alt="LOGO" />
+        <div class="grid grid-cols-1 lg:grid-cols-6 mb-12 pt-16">
+          <div class="lg:col-span-3">
+            <img src="../public/image.png" alt="LOGO" />
+            <p class="text-gray-700 text-xl mb-4 mt-6 tracking-wide">
+              Innovative solutions, expert teams, and <br />
+              seamless delivery to fuel your business <br />
+              growth.
+            </p>
 
+            <!-- Email Subscription -->
+            <div class="flex w-full mb-8">
+              <input
+                type="email"
+                placeholder="Enter Your Email Address"
+                class="flex px-16 py-4 border border-gray-300 font-sans rounded-l-md text-black text-lg tracking-normal"
+              />
+              <button
+                class="bg-orange-600 text-white px-16 py-3 rounded-md text-lg"
+              >
+                Submit
+              </button>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="space-y-4 w-96">
+              <!-- Address -->
+              <div class="flex items-start space-x-3">
+                <div
+                  class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                >
+                  <img src="../public/loc.png" alt="" />
+                </div>
+                <div>
+                  <p class="text-gray-900 font-normal text-xl">
+                    E-314, Infutrix Technologies, Sector -75, Chandigarh
+                  </p>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <img src="../public/mail.png" alt="" />
+                </div>
+                <p class="text-gray-900 font-normal text-xl">
+                  sales@infutrix.com
+                </p>
+              </div>
+
+              <!-- Phone -->
+              <div class="flex items-center space-x-3">
+                <div
+                  class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                >
+                  <img src="../public/mobile.png" alt="" />
+                </div>
+                <p class="text-gray-900 font-normal text-xl">+91 9056822276</p>
+              </div>
+            </div>
+          </div>
           <!-- Resources -->
-          <div>
-            <h3 class="text-orange-500 font-bold text-lg mb-6">Resources</h3>
+          <div class="lg:col-span-1">
+            <h3 class="text-orange-500 font-bold text-2xl mb-6">Resources</h3>
             <ul class="space-y-3">
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >About us</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Blogs</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >Blogs</a
+                >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Offshore</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Career</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >Career</a
+                >
               </li>
             </ul>
           </div>
 
           <!-- Services -->
-          <div>
-            <h3 class="text-orange-500 font-bold text-lg mb-6">Services</h3>
+          <div class="lg:col-span-1">
+            <h3 class="text-orange-500 font-bold text-2xl mb-6">Services</h3>
             <ul class="space-y-3">
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Artificial Intelligence</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Augmented Reality</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">IoT</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >IoT</a
+                >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Web 3</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >Web 3</a
+                >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Blockchain</a
                 >
               </li>
@@ -1981,115 +2312,55 @@
           </div>
 
           <!-- Industries -->
-          <div>
-            <h3 class="text-orange-500 font-bold text-lg mb-6">Industries</h3>
+          <div class="lg:col-span-1">
+            <h3 class="text-orange-500 font-bold text-2xl mb-6">Industries</h3>
             <ul class="space-y-3">
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Healthcare</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Education</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">F&B</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >F&B</a
+                >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >E-Commerce</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">SAAS</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >SAAS</a
+                >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900">Travel</a>
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
+                  >Travel</a
+                >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Entertainment</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Insurance</a
                 >
               </li>
               <li>
-                <a href="#" class="text-gray-700 hover:text-gray-900"
+                <a href="#" class="text-gray-700 hover:text-gray-900 text-lg"
                   >Manufacturing</a
                 >
               </li>
             </ul>
-          </div>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="border-t border-gray-300 pt-8 mb-8">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
-              >
-                <svg
-                  class="w-3 h-3 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div>
-                <p class="text-gray-900 font-medium">
-                  E-314, Infutrix Technologies, Sector -75,
-                </p>
-                <p class="text-gray-700">Chandigarh</p>
-              </div>
-            </div>
-
-            <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
-              >
-                <svg
-                  class="w-3 h-3 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                  />
-                  <path
-                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                  />
-                </svg>
-              </div>
-              <p class="text-gray-900">sales@infutrix.com</p>
-            </div>
-
-            <div class="flex items-center space-x-3">
-              <div
-                class="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0"
-              >
-                <svg
-                  class="w-3 h-3 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
-                  />
-                </svg>
-              </div>
-              <p class="text-gray-900">+91 9056822276</p>
-            </div>
           </div>
         </div>
 
@@ -2099,48 +2370,15 @@
         >
           <!-- Social Icons -->
           <div class="flex space-x-4 mb-4 md:mb-0">
-            <a
-              href="#"
-              class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
-            >
-              <svg
-                class="w-5 h-5 text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.750.097.118.112.221.083.342-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.758-1.378l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.624 0 11.99-5.367 11.99-11.987C24.007 5.367 18.641.001 12.017.001z"
-                />
-              </svg>
-            </a>
-            <a
-              href="#"
-              class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
-            >
-              <svg
-                class="w-5 h-5 text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
-                />
-              </svg>
-            </a>
-            <a
-              href="#"
-              class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center hover:bg-orange-600 transition-colors"
-            >
-              <svg
-                class="w-5 h-5 text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                />
-              </svg>
-            </a>
+            <div class="w-10 h-10">
+              <img src="../public/insta.png" alt="Logo" />
+            </div>
+            <div class="w-10 h-10">
+              <img src="../public/x.png" alt="Logo" />
+            </div>
+            <div class="w-10 h-10">
+              <img src="../public/linkedin.png" alt="Logo" />
+            </div>
           </div>
 
           <!-- Copyright and Links -->
@@ -2151,20 +2389,31 @@
               © 2025 Infutrix Tech Pvt Ltd. All rights reserved.
             </p>
             <div class="flex space-x-6 text-sm">
-              <a href="#" class="text-gray-600 hover:text-gray-900"
-                >• Terms and Conditions</a
+              <a href="#" class="text-gray-600 hover:text-gray-900">
+                <span
+                  class="w-1 h-1 bg-gray-600 rounded-full inline-block mr-2"
+                ></span>
+                Terms and Conditions
+              </a>
+              <a href="#" class="text-gray-600 hover:text-gray-900">
+                <span
+                  class="w-1 h-1 bg-gray-600 rounded-full inline-block mr-2"
+                ></span>
+                Privacy Policy</a
               >
               <a href="#" class="text-gray-600 hover:text-gray-900"
-                >• Privacy Policy</a
-              >
-              <a href="#" class="text-gray-600 hover:text-gray-900"
-                >• Sitemap</a
+                ><span
+                  class="w-1 h-1 bg-gray-600 rounded-full inline-block mr-2"
+                ></span>
+                Sitemap</a
               >
             </div>
           </div>
         </div>
       </div>
     </footer>
+    <!-- EDITABLE TEAM MEMBER DATA -->
+
     <script>
       (function () {
         const slider = document.getElementById("industry-slider");
@@ -2189,9 +2438,7 @@
 
         function getCardWidth() {
           const card = getCards()[0];
-          const style = getComputedStyle(card);
-          const marginRight = parseFloat(style.marginRight) || 0;
-          return card.offsetWidth + marginRight;
+          return card.offsetWidth; // ✅ No margin added = zero gap
         }
 
         function getBaseCenterOffset(cardWidth) {
@@ -2199,10 +2446,12 @@
         }
 
         function setTransform(index, useTransition = false) {
-          const cardWidth = getCardWidth();
+          const cardWidth = 470; // Use fixed width instead of calculating
           const baseOffset = getBaseCenterOffset(cardWidth);
-          const translateX = baseOffset - index * cardWidth;
-
+          const translateX = baseOffset + index * cardWidth; // No gaps
+          console.log(
+            `Index: ${index}, CardWidth: ${cardWidth}, BaseOffset: ${baseOffset}, TranslateX: ${translateX}`
+          );
           if (useTransition) {
             slider.style.transition = `transform ${transitionMs}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
           } else {
@@ -2211,12 +2460,10 @@
 
           slider.style.transform = `translate3d(${translateX}px, 0, 0)`;
 
-          // Force reflow if no transition
           if (!useTransition) {
             slider.getBoundingClientRect();
           }
         }
-
         function updateActiveCard() {
           const cards = getCards();
           cards.forEach((card) => card.classList.remove("active"));
@@ -2247,12 +2494,11 @@
           if (isAnimating) return;
 
           isAnimating = true;
-          currentIndex++;
 
-          // Check if we need to loop back
-          if (currentIndex >= originalCount) {
+          // Check if we need to loop back BEFORE incrementing
+          if (currentIndex + 1 >= originalCount) {
             // Move to the duplicate section first
-            setTransform(currentIndex, true);
+            setTransform(currentIndex + 1, true);
 
             // After the transition, snap back to beginning
             setTimeout(() => {
@@ -2263,6 +2509,7 @@
             }, transitionMs);
           } else {
             // Normal forward movement
+            currentIndex++;
             setTransform(currentIndex, true);
             setTimeout(() => {
               isAnimating = false;
@@ -2270,7 +2517,6 @@
             }, transitionMs);
           }
         }
-
         function startCarousel() {
           if (interval) return;
           interval = setInterval(moveToNext, holdMs + transitionMs);
@@ -2308,6 +2554,135 @@
         // Start after a delay
         setTimeout(startCarousel, 1500);
       })();
+    </script>
+    <script>
+      (function () {
+        const cards = Array.from(document.querySelectorAll(".faq-card"));
+
+        cards.forEach((card) => {
+          // create a header wrapper if not already: we target the first row
+          const header =
+            card.querySelector(".flex.items-center") || card.firstElementChild;
+          header.classList.add("faq-header");
+          header.setAttribute("tabindex", "0"); // keyboard focusable
+
+          const button = card.querySelector(".faq-toggle");
+          // ensure aria-expanded correct initially
+          if (button) button.setAttribute("aria-expanded", "false");
+
+          function closeCard(c) {
+            c.classList.remove("open");
+            const btn = c.querySelector(".faq-toggle");
+            if (btn) btn.setAttribute("aria-expanded", "false");
+          }
+
+          function openCard(c) {
+            c.classList.add("open");
+            const btn = c.querySelector(".faq-toggle");
+            if (btn) btn.setAttribute("aria-expanded", "true");
+          }
+
+          function toggleCard() {
+            const isOpen = card.classList.contains("open");
+
+            // if you want only one open at a time, close others
+            cards.forEach((c) => {
+              if (c !== card) closeCard(c);
+            });
+
+            if (isOpen) closeCard(card);
+            else openCard(card);
+          }
+
+          header.addEventListener("click", toggleCard);
+
+          // keyboard support: Enter or Space toggles
+          header.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              toggleCard();
+            }
+          });
+
+          // also make the button itself toggle (for safety)
+          if (button) {
+            button.addEventListener("click", (ev) => {
+              ev.stopPropagation(); // avoid double toggle
+              toggleCard();
+            });
+          }
+        });
+      })();
+    </script>
+    <script>
+      // Hardcoded team member data
+      const teamMembers = [
+        { id: "member-anmol", image: "../public/anmolb.png" },
+        { id: "member-zoya", image: "../public/zoya.png" },
+        { id: "member-abhishek", image: "../public/ab.png" },
+      ];
+
+      let currentMember = 0;
+      let isAnimating = false;
+
+      function updateTeamMember(direction = "right") {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        // Hide all content and images first
+        document.querySelectorAll(".team-content").forEach((content) => {
+          content.style.display = "none";
+          content.classList.remove("slide-in-left", "slide-in-right");
+        });
+
+        document.querySelectorAll(".team-image").forEach((img) => {
+          img.style.display = "none";
+          img.classList.remove("scale-in");
+        });
+
+        // Small delay then show new content with animation
+        setTimeout(() => {
+          // Show current member content
+          const currentContent = document.getElementById(
+            teamMembers[currentMember].id
+          );
+          currentContent.style.display = "block";
+
+          // Add slide animation based on direction
+          if (direction === "left") {
+            currentContent.classList.add("slide-in-left");
+          } else {
+            currentContent.classList.add("slide-in-right");
+          }
+
+          // Show and animate image
+          const currentImage = document.getElementById(
+            `member-image-${teamMembers[currentMember].id.split("-")[1]}`
+          );
+          currentImage.style.display = "block";
+          currentImage.classList.add("scale-in");
+
+          // Reset animation flag
+          setTimeout(() => {
+            isAnimating = false;
+          }, 600);
+        }, 100);
+      }
+
+      document.getElementById("prev-arrow").addEventListener("click", () => {
+        currentMember =
+          currentMember === 0 ? teamMembers.length - 1 : currentMember - 1;
+        updateTeamMember("left");
+      });
+
+      document.getElementById("right-arrow").addEventListener("click", () => {
+        currentMember =
+          currentMember === teamMembers.length - 1 ? 0 : currentMember + 1;
+        updateTeamMember("right");
+      });
+
+      // Initialize first member
+      updateTeamMember("right");
     </script>
   </body>
 </html>
