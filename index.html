@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Infutrix - Digital Solutions Partner</title>
+    <title>Infutrix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -41,7 +41,7 @@
             },
             animation: {
               "tab-slide": "tab-slide 27s infinite ease-in-out",
-              slide: "slideLoop 40s linear infinite", // ✅ Add this
+              slide: "slideLoop 40s linear infinite",
             },
           },
         },
@@ -255,15 +255,6 @@
         -webkit-backface-visibility: hidden;
       }
 
-      @keyframes slideLoop {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(50%);
-        } /* seamless because of duplication */
-      }
-
       .carousel-card-animated {
         width: 400px;
         flex: 0 0 400px;
@@ -284,12 +275,9 @@
       }
 
       /* Add internal spacing for content */
-      .carousel-card-animated > * {
-        padding: 20px;
-      }
 
       .carousel-card-animated .h-32 {
-        margin: 20px 20px 16px 20px; /* Add margins only to image container */
+        margin: 20px 20px 16px 20px;
       }
 
       .industry-section .slide-container {
@@ -469,16 +457,17 @@
       /* Make all carousel buttons consistent like Mining card */
       .carousel-card-animated button {
         display: block;
-        margin: 0 auto; /* center */
-        width: 100%; /* full width inside card */
+        margin: 0 auto;
+        margin-top: 50px; /* center */
+        width: 50%;
+        height: 70px;
         max-width: 300px; /* optional limit so it's not too wide */
         background-color: #f97316; /* orange-500 */
         color: #fff;
-        font-weight: 600;
+        font-weight: 800;
         font-size: 1rem;
-        border-radius: 0.5rem; /* rounded-lg */
+        border-radius: 0.5rem;
         padding: 12px 20px;
-        transition: background-color 0.3s ease;
       }
       .tab-content {
         display: none;
@@ -1470,29 +1459,31 @@
                   class="max-w-full max-h-full object-contain"
                 />
               </div>
-              <h3 class="font-bold text-lg mb-3">Social Media & Marketing</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Social Media & Marketing
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Sentiment Analysis</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Generative AI-Content Strategies</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Customer Engagement</span>
                 </li>
               </ul>
               <button
-                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-colors w-full"
+                class="bg-orange-500 hover:bg-orange-600 text-black px-6 py-2 rounded-lg font-semibold text-sm transition-colors"
               >
                 Talk To An Expert
               </button>
@@ -1505,23 +1496,25 @@
               >
                 <img src="../public/edu.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Education</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Education
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Tutoring</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Automated Grading</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>School Management SaaS Solutions</span>
                 </li>
@@ -1540,23 +1533,25 @@
               >
                 <img src="../public/ecom.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Ecommerce</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Ecommerce
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>RAG-Powered Search</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Driven Personalization</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Fraud Prevention</span>
                 </li>
@@ -1575,23 +1570,25 @@
               >
                 <img src="../public/oil.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Oil & Gas</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Oil & Gas
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Predictive Drilling Models</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Sustainability Tech</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Real-Time Monitoring</span>
                 </li>
@@ -1610,23 +1607,25 @@
               >
                 <img src="../public/manuf.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Manufacturing</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Manufacturing
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Powered Predictive Maintenance</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Robotics Integration</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Digital Twins</span>
                 </li>
@@ -1645,23 +1644,23 @@
               >
                 <img src="../public/bfsi.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">BFSI</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">BFSI</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Compliance Automation</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI Fraud Detection</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Hyper-Personalised Banking</span>
                 </li>
@@ -1680,23 +1679,25 @@
               >
                 <img src="../public/health.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Healthcare</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Healthcare
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Powered Diagnostic</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Predictive Care Models</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>HIPAA-Compliant Platforms</span>
                 </li>
@@ -1715,23 +1716,25 @@
               >
                 <img src="../public/es.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Energy Sector</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Energy Sector
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Smart Grid AI</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Predictive Maintenance</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Sustainability-Driven Solutions</span>
                 </li>
@@ -1750,23 +1753,25 @@
               >
                 <img src="../public/mine.png" alt="" />
               </div>
-              <h3 class="font-normal text-2xl mb-3 mt-4 text-center">Mining</h3>
-              <ul class="space-y-2 text-md text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Mining
+              </h3>
+              <ul class="space-y-2 text-md text-gray-700 mb-6 justify-around">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI Exploration Analytics</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Safety Automation</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Resource Optimization</span>
                 </li>
@@ -1777,8 +1782,6 @@
                 Talk To An Expert
               </button>
             </div>
-
-            <!-- DUPLICATE SET (exact same order for seamless loop) -->
 
             <!-- Duplicate 1. Social Media & Marketing -->
             <div class="carousel-card-animated">
@@ -1791,29 +1794,31 @@
                   class="max-w-full max-h-full object-contain"
                 />
               </div>
-              <h3 class="font-bold text-lg mb-3">Social Media & Marketing</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Social Media & Marketing
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Sentiment Analysis</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Generative AI-Content Strategies</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Customer Engagement</span>
                 </li>
               </ul>
               <button
-                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-semibold text-sm transition-colors w-full"
+                class="bg-orange-500 text-white px-2 py-2 rounded-lg font-semibold text-2xl"
               >
                 Talk To An Expert
               </button>
@@ -1826,23 +1831,25 @@
               >
                 <img src="../public/edu.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Education</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Education
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Tutoring</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Automated Grading</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>School Management SaaS Solutions</span>
                 </li>
@@ -1861,23 +1868,25 @@
               >
                 <img src="../public/ecom.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Ecommerce</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Ecommerce
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>RAG-Powered Search</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Driven Personalization</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Fraud Prevention</span>
                 </li>
@@ -1896,23 +1905,25 @@
               >
                 <img src="../public/oil.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Oil & Gas</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Oil & Gas
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Predictive Drilling Models</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Sustainability Tech</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Real-Time Monitoring</span>
                 </li>
@@ -1931,23 +1942,25 @@
               >
                 <img src="../public/manuf.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Manufacturing</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Manufacturing
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Powered Predictive Maintenance</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Robotics Integration</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Digital Twins</span>
                 </li>
@@ -1966,23 +1979,23 @@
               >
                 <img src="../public/bfsi.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">BFSI</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">BFSI</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Compliance Automation</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI Fraud Detection</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Hyper-Personalised Banking</span>
                 </li>
@@ -2001,23 +2014,25 @@
               >
                 <img src="../public/health.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Healthcare</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Healthcare
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI-Powered Diagnostic</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Predictive Care Models</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>HIPAA-Compliant Platforms</span>
                 </li>
@@ -2036,23 +2051,25 @@
               >
                 <img src="../public/es.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Energy Sector</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Energy Sector
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Smart Grid AI</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Predictive Maintenance</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Sustainability-Driven Solutions</span>
                 </li>
@@ -2071,23 +2088,25 @@
               >
                 <img src="../public/mine.png" alt="" />
               </div>
-              <h3 class="font-bold text-lg mb-3">Mining</h3>
+              <h3 class="font-semibold text-2xl mb-3 mt-4 text-center">
+                Mining
+              </h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>AI Exploration Analytics</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Safety Automation</span>
                 </li>
-                <li class="flex items-start space-x-2">
+                <li class="flex items-start font-semibold text-xl">
                   <div
-                    class="w-1.5 h-1.5 bg-orange-500 rounded-full mt-2"
+                    class="w-4 h-4 bg-orange-500 rounded-full mt-2 mr-8"
                   ></div>
                   <span>Resource Optimization</span>
                 </li>
@@ -2908,352 +2927,254 @@
     <!-- EDITABLE TEAM MEMBER DATA -->
 
     <script>
+      /*
+  Best solution: Continuous rAF loop + duplication-safe wrap + active highlight.
+  Drop this in place of your previous industry-slider script.
+*/
       (function () {
         const slider = document.getElementById("industry-slider");
         if (!slider) return;
-
-        slider.classList.remove("animate-slide");
-        slider.style.animation = "none";
-
         const viewport = slider.parentElement;
-        const transitionMs = 800;
-        const holdMs = 3000;
-        const originalCount = 9; // keep in sync with your unique cards
-        let logicalIndex = 0; // logical index that increments indefinitely
-        let interval = null;
-        let isAnimating = false;
-        let awaitingSnapForward = false;
-        let awaitingSnapBackward = false;
-        let currentTranslate = 0;
-        let loopWidth = 0; // pixel width of one original set (exact)
-        let cardsLoaded = false;
 
+        // ---------- TUNABLES ----------
+        const speedPxPerSec = 150; // px per second (increase = faster)
+        const activeCheckInterval = 100; // ms; how often to recompute .active
+        const resizeDebounceMs = 120;
+        const assetWaitMs = 800; // fallback wait for images
+        // -------------------------------
+
+        // runtime
+        let originalTotalWidth = 0; // width of the original group (sum of unique cards)
+        let currentTranslate = 0;
+        let rafId = null;
+        let lastTs = null;
+        let paused = false;
+        let activeTimer = null;
+        let resizeTimer = null;
+
+        // helpers
         function getCards() {
           return Array.from(slider.querySelectorAll(".carousel-card-animated"));
         }
 
-        // compute the pixel width of the original set robustly using offsetLeft (not affected by transforms)
-        function computeLoopWidth() {
+        // If duplication not present, clone the entire original set once
+        function ensureDuplication() {
           const cards = getCards();
-          if (cards.length <= originalCount) {
-            loopWidth = 0;
-            return;
+          if (!cards.length) return;
+          // detect if duplicated: naive check - see if second half appears present
+          if (cards.length >= 2 && cards.length % 2 === 0) {
+            // we won't be overly clever; assume author duplicated manually if length is even and > 1
+            // but to be robust, verify the first element's HTML appears again later
+            const firstHtml = cards[0].innerHTML.trim().slice(0, 200);
+            const midHtml = cards[cards.length / 2]
+              ? cards[cards.length / 2].innerHTML.trim().slice(0, 200)
+              : null;
+            if (midHtml && firstHtml === midHtml) return; // already duplicated
           }
-          const first = cards[0];
-          const firstDup = cards[originalCount];
-          // prefer offsetLeft (stable against transforms) and fallback to summing widths
-          loopWidth =
-            firstDup && first ? firstDup.offsetLeft - first.offsetLeft : 0;
-
-          if (!loopWidth) {
-            // fallback: sum the widths + gap between originalCount cards
-            loopWidth = 0;
-            for (let i = 0; i < Math.min(originalCount, cards.length); i++) {
-              loopWidth += cards[i].offsetWidth;
-            }
-          }
-
-          // guard: keep it finite
-          if (!isFinite(loopWidth) || loopWidth <= 0) {
-            loopWidth = 0;
-          }
+          // not duplicated: clone once
+          const fragment = document.createDocumentFragment();
+          getCards().forEach((c) => {
+            const clone = c.cloneNode(true);
+            if (clone.id) clone.id = clone.id + "-dup";
+            fragment.appendChild(clone);
+          });
+          slider.appendChild(fragment);
         }
 
-        // tag cards with logical index
-        function tagCards() {
+        // compute sum of widths+horizontal margins for the first uniqueCount cards
+        function computeOriginalTotalWidth() {
           const cards = getCards();
-          cards.forEach((c, i) => {
-            c.dataset.logical = i % originalCount;
-          });
+          if (!cards.length) return 0;
+          // determine uniqueCount: if duplicated once, uniqueCount = total/2, else total
+          let uniqueCount = cards.length;
+          if (cards.length % 2 === 0) {
+            // heuristic: if first and midpoint HTML match, assume duplication -> use half
+            const firstHtml = cards[0].innerHTML.trim().slice(0, 200);
+            const mid = cards.length / 2;
+            const midHtml = cards[mid]
+              ? cards[mid].innerHTML.trim().slice(0, 200)
+              : null;
+            if (midHtml && firstHtml === midHtml) uniqueCount = mid;
+          }
+          let totalW = 0;
+          for (let i = 0; i < uniqueCount; i++) {
+            const c = cards[i];
+            const s = getComputedStyle(c);
+            const ml = parseFloat(s.marginLeft || 0);
+            const mr = parseFloat(s.marginRight || 0);
+            totalW += c.offsetWidth + ml + mr;
+          }
+          return Math.round(totalW);
+        }
+
+        function applyTranslate() {
+          slider.style.transform = `translate3d(${
+            Math.round(currentTranslate * 100) / 100
+          }px,0,0)`;
         }
 
         function getViewportCenterX() {
-          const rect = viewport.getBoundingClientRect();
-          return rect.left + rect.width / 2;
+          const r = viewport.getBoundingClientRect();
+          return r.left + r.width / 2;
         }
 
-        // apply translate with optional transition
-        function applyTranslate(useTransition = false) {
-          slider.style.transition = useTransition
-            ? `transform ${transitionMs}ms cubic-bezier(0.25,0.46,0.45,0.94)`
-            : "none";
-          // round to 1/100th to avoid tiny subpixel drift across frames
-          const rounded = Math.round(currentTranslate * 100) / 100;
-          slider.style.transform = `translate3d(${rounded}px,0,0)`;
-        }
-
-        // center a DOM card element in viewport center
-        function centerCardElement(cardEl, useTransition = false) {
-          if (!cardEl) return;
-          const cardRect = cardEl.getBoundingClientRect();
-          const cardCenter = cardRect.left + cardRect.width / 2;
-          const viewportCenter = getViewportCenterX();
-          const delta = viewportCenter - cardCenter;
-          currentTranslate += delta;
-          applyTranslate(useTransition);
-        }
-
-        // mark active by logical index (choose instance closest to center)
-        function setActiveForLogical(logical) {
+        // find single best card (closest to viewport center) and add .active
+        function updateActiveCard() {
           const cards = getCards();
+          if (!cards.length) return;
+          const vcenter = getViewportCenterX();
+          let best = null;
+          let bestDist = Infinity;
+          cards.forEach((c) => {
+            const r = c.getBoundingClientRect();
+            const center = r.left + r.width / 2;
+            const d = Math.abs(center - vcenter);
+            if (d < bestDist) {
+              bestDist = d;
+              best = c;
+            }
+          });
           cards.forEach((c) => c.classList.remove("active"));
-          const candidates = cards.filter(
-            (c) => Number(c.dataset.logical) === logical
-          );
-          if (!candidates.length) return;
-          const viewportCenter = getViewportCenterX();
-          let best = candidates[0];
-          let bestDist = Infinity;
-          candidates.forEach((c) => {
-            const r = c.getBoundingClientRect();
-            const center = r.left + r.width / 2;
-            const d = Math.abs(center - viewportCenter);
-            if (d < bestDist) {
-              bestDist = d;
-              best = c;
-            }
-          });
-          best.classList.add("active");
-          // also mark other instances for continuity (optional)
-          candidates.forEach((c) => {
-            if (c !== best) c.classList.add("active");
-          });
+          if (best) best.classList.add("active");
         }
 
-        // move to next logical index (forward)
-        function moveToNext() {
-          if (isAnimating) return;
-          isAnimating = true;
-          logicalIndex++;
+        // keep translate inside (-originalTotalWidth, 0] for continuous wrap
+        function normalizeTranslate() {
+          if (!originalTotalWidth || originalTotalWidth <= 0) return;
+          // modulo into [0, originalTotalWidth)
+          currentTranslate =
+            ((currentTranslate % originalTotalWidth) + originalTotalWidth) %
+            originalTotalWidth;
+          // shift into (-originalTotalWidth, 0]
+          if (currentTranslate > 0) currentTranslate -= originalTotalWidth;
+        }
 
-          const logicalToCenter = logicalIndex % originalCount;
-          const candidates = getCards().filter(
-            (c) => Number(c.dataset.logical) === logicalToCenter
-          );
-          if (!candidates.length) {
-            isAnimating = false;
+        // rAF loop
+        function step(ts) {
+          if (paused) {
+            lastTs = ts;
+            rafId = requestAnimationFrame(step);
             return;
           }
+          if (lastTs == null) lastTs = ts;
+          const dt = (ts - lastTs) / 1000;
+          lastTs = ts;
 
-          // pick candidate nearest to center now (the visible copy)
-          const viewportCenter = getViewportCenterX();
-          let best = candidates[0];
-          let bestDist = Infinity;
-          candidates.forEach((c) => {
-            const r = c.getBoundingClientRect();
-            const center = r.left + r.width / 2;
-            const d = Math.abs(center - viewportCenter);
-            if (d < bestDist) {
-              bestDist = d;
-              best = c;
-            }
+          // move leftwards
+          currentTranslate -= speedPxPerSec * dt;
+
+          // normalize into continuous band based on originalTotalWidth
+          if (originalTotalWidth > 0) {
+            // keep it bounded: avoids drifting far away and avoids snap to 0
+            normalizeTranslate();
+          }
+
+          applyTranslate();
+          rafId = requestAnimationFrame(step);
+        }
+
+        // interactions: pause/resume
+        function bindInteractions() {}
+
+        // resize handling
+        function bindResize() {
+          window.addEventListener("resize", () => {
+            if (resizeTimer) clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+              // recompute widths and keep translate coherent
+              const prev = currentTranslate;
+              originalTotalWidth = computeOriginalTotalWidth();
+              if (originalTotalWidth > 0) {
+                // keep translate normalized into (-originalTotalWidth, 0]
+                normalizeTranslate();
+              }
+              applyTranslate();
+              updateActiveCard();
+            }, resizeDebounceMs);
           });
-
-          centerCardElement(best, true);
-
-          // if we advanced into duplicate region (logicalIndex reached originalCount), snap forward
-          if (logicalIndex >= originalCount) {
-            awaitingSnapForward = true;
-          }
         }
 
-        // move to previous logical index (backwards) — safe fallback if you implement prev UI
-        function moveToPrev() {
-          if (isAnimating) return;
-          isAnimating = true;
-          logicalIndex--;
-
-          // if we moved negative and went into the duplicates before the originals, mark awaiting backward snap
-          if (logicalIndex < 0) {
-            // normalize to a positive large index to keep logic consistent
-            logicalIndex = originalCount - 1;
-            awaitingSnapBackward = true;
-          }
-
-          const logicalToCenter = logicalIndex % originalCount;
-          const candidates = getCards().filter(
-            (c) => Number(c.dataset.logical) === logicalToCenter
-          );
-          if (!candidates.length) {
-            isAnimating = false;
-            return;
-          }
-
-          const viewportCenter = getViewportCenterX();
-          let best = candidates[0];
-          let bestDist = Infinity;
-          candidates.forEach((c) => {
-            const r = c.getBoundingClientRect();
-            const center = r.left + r.width / 2;
-            const d = Math.abs(center - viewportCenter);
-            if (d < bestDist) {
-              bestDist = d;
-              best = c;
-            }
-          });
-
-          centerCardElement(best, true);
-        }
-
-        function startCarousel() {
-          if (interval) return;
-          interval = setInterval(moveToNext, holdMs + transitionMs);
-        }
-        function stopCarousel() {
-          if (!interval) return;
-          clearInterval(interval);
-          interval = null;
-        }
-
-        // pause/resume handlers
-        viewport.addEventListener("mouseenter", stopCarousel);
-        viewport.addEventListener("mouseleave", startCarousel);
-        slider.addEventListener("pointerdown", stopCarousel);
-        document.addEventListener("pointerup", () => {
-          if (!viewport.matches(":hover")) startCarousel();
-        });
-
-        // transition end: handle snapping precisely using loopWidth (no re-measure of bounding boxes)
-        slider.addEventListener("transitionend", (ev) => {
-          if (ev.propertyName && ev.propertyName.indexOf("transform") === -1)
-            return;
-
-          if (awaitingSnapForward && loopWidth) {
-            awaitingSnapForward = false;
-            // animated forward into duplicate region (slider moved left).
-            // Add loopWidth to currentTranslate immediately (no transition) to map duplicate -> original.
-            currentTranslate += loopWidth;
-            applyTranslate(false);
-
-            // normalize logicalIndex into original set
-            logicalIndex = logicalIndex % originalCount;
-            setActiveForLogical(logicalIndex);
-          } else if (awaitingSnapBackward && loopWidth) {
-            awaitingSnapBackward = false;
-            // animated backward into pre-original duplicate zone; subtract loopWidth to map to original copy
-            currentTranslate -= loopWidth;
-            applyTranslate(false);
-
-            logicalIndex = logicalIndex % originalCount;
-            setActiveForLogical(logicalIndex);
-          } else {
-            // normal case: mark the logical index active
-            const logical =
-              ((logicalIndex % originalCount) + originalCount) % originalCount;
-            setActiveForLogical(logical);
-          }
-
-          isAnimating = false;
-        });
-
-        // handle window resize: recompute loopWidth and re-center logical card
-        let resizeTimer = null;
-        window.addEventListener("resize", () => {
-          if (resizeTimer) clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(() => {
-            computeLoopWidth();
-
-            // recenter currently logical card without transition
-            const logical =
-              ((logicalIndex % originalCount) + originalCount) % originalCount;
-            const candidates = getCards().filter(
-              (c) => Number(c.dataset.logical) === logical
-            );
-            if (candidates.length) {
-              const viewportCenter = getViewportCenterX();
-              let best = candidates[0];
-              let bestDist = Infinity;
-              candidates.forEach((c) => {
-                const r = c.getBoundingClientRect();
-                const center = r.left + r.width / 2;
-                const d = Math.abs(center - viewportCenter);
-                if (d < bestDist) {
-                  bestDist = d;
-                  best = c;
-                }
-              });
-              const r = best.getBoundingClientRect();
-              const delta = getViewportCenterX() - (r.left + r.width / 2);
-              currentTranslate += delta;
-              applyTranslate(false);
-              setActiveForLogical(logical);
-            }
-          }, 120);
-        });
-
-        // Recompute loopWidth reliably after images/fonts load
-        function waitForAssetsThenInit() {
+        // wait images then start
+        function waitForAssetsThenStart() {
           const imgs = Array.from(slider.querySelectorAll("img"));
           if (!imgs.length) {
-            cardsLoaded = true;
-            init();
+            start();
             return;
           }
           let remaining = imgs.length;
           imgs.forEach((img) => {
-            if (img.complete) {
-              remaining--;
-            } else {
+            if (img.complete) remaining--;
+            else {
               img.addEventListener("load", () => {
                 remaining--;
-                if (remaining <= 0 && !cardsLoaded) {
-                  cardsLoaded = true;
-                  init();
-                }
+                if (remaining <= 0) start();
               });
               img.addEventListener("error", () => {
                 remaining--;
-                if (remaining <= 0 && !cardsLoaded) {
-                  cardsLoaded = true;
-                  init();
-                }
+                if (remaining <= 0) start();
               });
             }
           });
-          // if all were already complete
-          if (remaining <= 0 && !cardsLoaded) {
-            cardsLoaded = true;
-            init();
-          }
-          // safety: if some images hang, still init after small delay
           setTimeout(() => {
-            if (!cardsLoaded) {
-              cardsLoaded = true;
-              init();
-            }
-          }, 800);
+            if (remaining > 0) start();
+          }, assetWaitMs);
+          if (remaining <= 0) start();
         }
 
-      function init() {
-  tagCards();
-  computeLoopWidth();
+        // start everything
+        function start() {
+          // disable conflicting CSS animation if present
+          slider.classList.remove("animate-slide");
+          slider.style.animation = "none";
 
-  // Get cards and viewport info
-  const cards = getCards();
-  const viewportRect = viewport.getBoundingClientRect();
-  const viewportCenter = viewportRect.left + viewportRect.width / 2;
-  
-  // Find the first card (logical index 0)
-  const candidates = cards.filter(c => Number(c.dataset.logical) === 0);
-  const chosen = candidates[0] || cards[0];
-  if (!chosen) return;
+          ensureDuplication();
+          originalTotalWidth = computeOriginalTotalWidth();
+          // start at 0 (natural left layout). Do not reset to 0 during the loop.
+          currentTranslate = 0;
+          applyTranslate();
 
-  // Instead of centering exactly, offset to show cards on the left
-  const cardWidth = chosen.offsetWidth;
-  const offsetFromCenter = cardWidth * 1.2; // Shows about 1 card on the left
-  
-  const r = chosen.getBoundingClientRect();
-  const targetPosition = viewportCenter + offsetFromCenter; // Move right to show left cards
-  currentTranslate = targetPosition - (r.left + r.width / 2);
-  
-  applyTranslate(false);
-  setActiveForLogical(0);
+          // start active timer
+          if (activeTimer) clearInterval(activeTimer);
+          activeTimer = setInterval(updateActiveCard, activeCheckInterval);
+          updateActiveCard();
 
-  // Start autoplay after small delay
-  setTimeout(startCarousel, 700);
-}
-        // run initialization after layout and assets ready
-        requestAnimationFrame(() => waitForAssetsThenInit());
+          // bind interactions and resize
+          bindInteractions();
+          bindResize();
+
+          // start rAF
+          if (rafId) cancelAnimationFrame(rafId);
+          lastTs = null;
+          rafId = requestAnimationFrame(step);
+        }
+
+        // stop/cleanup (optional)
+        function stop() {
+          if (rafId) cancelAnimationFrame(rafId);
+          rafId = null;
+          if (activeTimer) clearInterval(activeTimer);
+          activeTimer = null;
+        }
+
+        // debug helper
+        window.__inf_slider_debug = {
+          state: () => ({
+            originalTotalWidth,
+            currentTranslate,
+            paused,
+            cardCount: getCards().length,
+          }),
+          recompute: () => {
+            originalTotalWidth = computeOriginalTotalWidth();
+            updateActiveCard();
+            applyTranslate();
+          },
+          stop,
+          start,
+        };
+
+        // init
+        waitForAssetsThenStart();
       })();
     </script>
 
