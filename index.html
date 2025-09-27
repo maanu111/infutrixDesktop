@@ -238,7 +238,7 @@
         display: flex;
         gap: 0 !important;
         align-items: center;
-        animation: slideLoop 40s linear infinite;
+        /* animation: slideLoop 40s linear infinite; */
         will-change: transform;
         transform: translateZ(0);
       }
@@ -273,13 +273,7 @@
         will-change: transform;
         backface-visibility: hidden;
       }
-      .carousel-card-animated.active {
-        filter: grayscale(0%);
-        opacity: 1;
-        transform: scale(1.1) translateY(-10px); /* Increase from 1.1 to 1.2 for more noticeable scaling */
-        z-index: 10;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-      }
+
       .industry-section .slide-container {
         box-sizing: content-box;
       }
@@ -425,10 +419,14 @@
       .carousel-card-animated.active {
         filter: grayscale(0%);
         opacity: 1;
-        transform: scale(1.1) translateY(-10px);
-        z-index: 50; /* High z-index to appear above other elements */
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-        position: relative; /* Needed for z-index to work */
+        transform: translateY(
+          -10px
+        ); /* small vertical lift only — doesn't change width */
+        z-index: 50; /* keep above neighbors */
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+        position: relative; /* allow z-index to take effect */
+        transition: box-shadow 300ms ease, transform 300ms ease,
+          opacity 300ms ease;
       }
 
       /* Make sure the industry section allows overflow */
@@ -1471,7 +1469,7 @@
               <div
                 class="h-32 rounded-lg mb-4 flex items-center justify-center"
               >
-                <img src="../public/es.bfsi" alt="" />
+                <img src="../public/bfsi.png" alt="" />
               </div>
               <h3 class="font-bold text-lg mb-3">BFSI</h3>
               <ul class="space-y-2 text-sm text-gray-700 mb-6">
@@ -2419,142 +2417,345 @@
         const slider = document.getElementById("industry-slider");
         if (!slider) return;
 
-        // Stop any CSS animations
         slider.classList.remove("animate-slide");
         slider.style.animation = "none";
 
         const viewport = slider.parentElement;
-        const getCards = () =>
-          Array.from(slider.querySelectorAll(".carousel-card-animated"));
-        if (!getCards().length) return;
-
-        const originalCount =
-          Math.floor(getCards().length / 2) || getCards().length;
-        const transitionMs = 800; // Slightly longer for smoother feel
-        const holdMs = 2000;
-        let currentIndex = 0;
+        const transitionMs = 800;
+        const holdMs = 3000;
+        const originalCount = 9; // keep in sync with your unique cards
+        let logicalIndex = 0; // logical index that increments indefinitely
         let interval = null;
         let isAnimating = false;
+        let awaitingSnapForward = false;
+        let awaitingSnapBackward = false;
+        let currentTranslate = 0;
+        let loopWidth = 0; // pixel width of one original set (exact)
+        let cardsLoaded = false;
 
-        function getCardWidth() {
-          const card = getCards()[0];
-          return card.offsetWidth; // ✅ No margin added = zero gap
+        function getCards() {
+          return Array.from(slider.querySelectorAll(".carousel-card-animated"));
         }
 
-        function getBaseCenterOffset(cardWidth) {
-          return viewport.offsetWidth / 2 - cardWidth / 2;
-        }
-
-        function setTransform(index, useTransition = false) {
-          const cardWidth = 470; // Use fixed width instead of calculating
-          const baseOffset = getBaseCenterOffset(cardWidth);
-          const translateX = baseOffset + index * cardWidth; // No gaps
-          console.log(
-            `Index: ${index}, CardWidth: ${cardWidth}, BaseOffset: ${baseOffset}, TranslateX: ${translateX}`
-          );
-          if (useTransition) {
-            slider.style.transition = `transform ${transitionMs}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-          } else {
-            slider.style.transition = "none";
-          }
-
-          slider.style.transform = `translate3d(${translateX}px, 0, 0)`;
-
-          if (!useTransition) {
-            slider.getBoundingClientRect();
-          }
-        }
-        function updateActiveCard() {
+        // compute the pixel width of the original set robustly using offsetLeft (not affected by transforms)
+        function computeLoopWidth() {
           const cards = getCards();
-          cards.forEach((card) => card.classList.remove("active"));
+          if (cards.length <= originalCount) {
+            loopWidth = 0;
+            return;
+          }
+          const first = cards[0];
+          const firstDup = cards[originalCount];
+          // prefer offsetLeft (stable against transforms) and fallback to summing widths
+          loopWidth =
+            firstDup && first ? firstDup.offsetLeft - first.offsetLeft : 0;
 
-          const viewportRect = viewport.getBoundingClientRect();
-          const viewportCenter = viewportRect.left + viewportRect.width / 2;
+          if (!loopWidth) {
+            // fallback: sum the widths + gap between originalCount cards
+            loopWidth = 0;
+            for (let i = 0; i < Math.min(originalCount, cards.length); i++) {
+              loopWidth += cards[i].offsetWidth;
+            }
+          }
 
-          let activeCard = null;
-          let minDistance = Infinity;
+          // guard: keep it finite
+          if (!isFinite(loopWidth) || loopWidth <= 0) {
+            loopWidth = 0;
+          }
+        }
 
-          cards.forEach((card) => {
-            const cardRect = card.getBoundingClientRect();
-            const cardCenter = cardRect.left + cardRect.width / 2;
-            const distance = Math.abs(cardCenter - viewportCenter);
+        // tag cards with logical index
+        function tagCards() {
+          const cards = getCards();
+          cards.forEach((c, i) => {
+            c.dataset.logical = i % originalCount;
+          });
+        }
 
-            if (distance < minDistance) {
-              minDistance = distance;
-              activeCard = card;
+        function getViewportCenterX() {
+          const rect = viewport.getBoundingClientRect();
+          return rect.left + rect.width / 2;
+        }
+
+        // apply translate with optional transition
+        function applyTranslate(useTransition = false) {
+          slider.style.transition = useTransition
+            ? `transform ${transitionMs}ms cubic-bezier(0.25,0.46,0.45,0.94)`
+            : "none";
+          // round to 1/100th to avoid tiny subpixel drift across frames
+          const rounded = Math.round(currentTranslate * 100) / 100;
+          slider.style.transform = `translate3d(${rounded}px,0,0)`;
+        }
+
+        // center a DOM card element in viewport center
+        function centerCardElement(cardEl, useTransition = false) {
+          if (!cardEl) return;
+          const cardRect = cardEl.getBoundingClientRect();
+          const cardCenter = cardRect.left + cardRect.width / 2;
+          const viewportCenter = getViewportCenterX();
+          const delta = viewportCenter - cardCenter;
+          currentTranslate += delta;
+          applyTranslate(useTransition);
+        }
+
+        // mark active by logical index (choose instance closest to center)
+        function setActiveForLogical(logical) {
+          const cards = getCards();
+          cards.forEach((c) => c.classList.remove("active"));
+          const candidates = cards.filter(
+            (c) => Number(c.dataset.logical) === logical
+          );
+          if (!candidates.length) return;
+          const viewportCenter = getViewportCenterX();
+          let best = candidates[0];
+          let bestDist = Infinity;
+          candidates.forEach((c) => {
+            const r = c.getBoundingClientRect();
+            const center = r.left + r.width / 2;
+            const d = Math.abs(center - viewportCenter);
+            if (d < bestDist) {
+              bestDist = d;
+              best = c;
+            }
+          });
+          best.classList.add("active");
+          // also mark other instances for continuity (optional)
+          candidates.forEach((c) => {
+            if (c !== best) c.classList.add("active");
+          });
+        }
+
+        // move to next logical index (forward)
+        function moveToNext() {
+          if (isAnimating) return;
+          isAnimating = true;
+          logicalIndex++;
+
+          const logicalToCenter = logicalIndex % originalCount;
+          const candidates = getCards().filter(
+            (c) => Number(c.dataset.logical) === logicalToCenter
+          );
+          if (!candidates.length) {
+            isAnimating = false;
+            return;
+          }
+
+          // pick candidate nearest to center now (the visible copy)
+          const viewportCenter = getViewportCenterX();
+          let best = candidates[0];
+          let bestDist = Infinity;
+          candidates.forEach((c) => {
+            const r = c.getBoundingClientRect();
+            const center = r.left + r.width / 2;
+            const d = Math.abs(center - viewportCenter);
+            if (d < bestDist) {
+              bestDist = d;
+              best = c;
             }
           });
 
-          if (activeCard) {
-            activeCard.classList.add("active");
+          centerCardElement(best, true);
+
+          // if we advanced into duplicate region (logicalIndex reached originalCount), snap forward
+          if (logicalIndex >= originalCount) {
+            awaitingSnapForward = true;
           }
         }
 
-        function moveToNext() {
+        // move to previous logical index (backwards) — safe fallback if you implement prev UI
+        function moveToPrev() {
           if (isAnimating) return;
-
           isAnimating = true;
+          logicalIndex--;
 
-          // Check if we need to loop back BEFORE incrementing
-          if (currentIndex + 1 >= originalCount) {
-            // Move to the duplicate section first
-            setTransform(currentIndex + 1, true);
-
-            // After the transition, snap back to beginning
-            setTimeout(() => {
-              currentIndex = 0;
-              setTransform(currentIndex, false);
-              isAnimating = false;
-              updateActiveCard();
-            }, transitionMs);
-          } else {
-            // Normal forward movement
-            currentIndex++;
-            setTransform(currentIndex, true);
-            setTimeout(() => {
-              isAnimating = false;
-              updateActiveCard();
-            }, transitionMs);
+          // if we moved negative and went into the duplicates before the originals, mark awaiting backward snap
+          if (logicalIndex < 0) {
+            // normalize to a positive large index to keep logic consistent
+            logicalIndex = originalCount - 1;
+            awaitingSnapBackward = true;
           }
+
+          const logicalToCenter = logicalIndex % originalCount;
+          const candidates = getCards().filter(
+            (c) => Number(c.dataset.logical) === logicalToCenter
+          );
+          if (!candidates.length) {
+            isAnimating = false;
+            return;
+          }
+
+          const viewportCenter = getViewportCenterX();
+          let best = candidates[0];
+          let bestDist = Infinity;
+          candidates.forEach((c) => {
+            const r = c.getBoundingClientRect();
+            const center = r.left + r.width / 2;
+            const d = Math.abs(center - viewportCenter);
+            if (d < bestDist) {
+              bestDist = d;
+              best = c;
+            }
+          });
+
+          centerCardElement(best, true);
         }
+
         function startCarousel() {
           if (interval) return;
           interval = setInterval(moveToNext, holdMs + transitionMs);
         }
-
         function stopCarousel() {
-          if (interval) {
-            clearInterval(interval);
-            interval = null;
-          }
+          if (!interval) return;
+          clearInterval(interval);
+          interval = null;
         }
 
-        // Event listeners for pause on hover
+        // pause/resume handlers
         viewport.addEventListener("mouseenter", stopCarousel);
         viewport.addEventListener("mouseleave", startCarousel);
-
-        // Pause on interaction
         slider.addEventListener("pointerdown", stopCarousel);
         document.addEventListener("pointerup", () => {
-          if (!viewport.matches(":hover")) {
-            startCarousel();
+          if (!viewport.matches(":hover")) startCarousel();
+        });
+
+        // transition end: handle snapping precisely using loopWidth (no re-measure of bounding boxes)
+        slider.addEventListener("transitionend", (ev) => {
+          if (ev.propertyName && ev.propertyName.indexOf("transform") === -1)
+            return;
+
+          if (awaitingSnapForward && loopWidth) {
+            awaitingSnapForward = false;
+            // animated forward into duplicate region (slider moved left).
+            // Add loopWidth to currentTranslate immediately (no transition) to map duplicate -> original.
+            currentTranslate += loopWidth;
+            applyTranslate(false);
+
+            // normalize logicalIndex into original set
+            logicalIndex = logicalIndex % originalCount;
+            setActiveForLogical(logicalIndex);
+          } else if (awaitingSnapBackward && loopWidth) {
+            awaitingSnapBackward = false;
+            // animated backward into pre-original duplicate zone; subtract loopWidth to map to original copy
+            currentTranslate -= loopWidth;
+            applyTranslate(false);
+
+            logicalIndex = logicalIndex % originalCount;
+            setActiveForLogical(logicalIndex);
+          } else {
+            // normal case: mark the logical index active
+            const logical =
+              ((logicalIndex % originalCount) + originalCount) % originalCount;
+            setActiveForLogical(logical);
           }
+
+          isAnimating = false;
         });
 
-        // Handle resize
+        // handle window resize: recompute loopWidth and re-center logical card
+        let resizeTimer = null;
         window.addEventListener("resize", () => {
-          setTransform(currentIndex, false);
-          setTimeout(updateActiveCard, 50);
+          if (resizeTimer) clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            computeLoopWidth();
+
+            // recenter currently logical card without transition
+            const logical =
+              ((logicalIndex % originalCount) + originalCount) % originalCount;
+            const candidates = getCards().filter(
+              (c) => Number(c.dataset.logical) === logical
+            );
+            if (candidates.length) {
+              const viewportCenter = getViewportCenterX();
+              let best = candidates[0];
+              let bestDist = Infinity;
+              candidates.forEach((c) => {
+                const r = c.getBoundingClientRect();
+                const center = r.left + r.width / 2;
+                const d = Math.abs(center - viewportCenter);
+                if (d < bestDist) {
+                  bestDist = d;
+                  best = c;
+                }
+              });
+              const r = best.getBoundingClientRect();
+              const delta = getViewportCenterX() - (r.left + r.width / 2);
+              currentTranslate += delta;
+              applyTranslate(false);
+              setActiveForLogical(logical);
+            }
+          }, 120);
         });
 
-        // Initialize
-        setTransform(0, false);
-        updateActiveCard();
+        // Recompute loopWidth reliably after images/fonts load
+        function waitForAssetsThenInit() {
+          const imgs = Array.from(slider.querySelectorAll("img"));
+          if (!imgs.length) {
+            cardsLoaded = true;
+            init();
+            return;
+          }
+          let remaining = imgs.length;
+          imgs.forEach((img) => {
+            if (img.complete) {
+              remaining--;
+            } else {
+              img.addEventListener("load", () => {
+                remaining--;
+                if (remaining <= 0 && !cardsLoaded) {
+                  cardsLoaded = true;
+                  init();
+                }
+              });
+              img.addEventListener("error", () => {
+                remaining--;
+                if (remaining <= 0 && !cardsLoaded) {
+                  cardsLoaded = true;
+                  init();
+                }
+              });
+            }
+          });
+          // if all were already complete
+          if (remaining <= 0 && !cardsLoaded) {
+            cardsLoaded = true;
+            init();
+          }
+          // safety: if some images hang, still init after small delay
+          setTimeout(() => {
+            if (!cardsLoaded) {
+              cardsLoaded = true;
+              init();
+            }
+          }, 800);
+        }
 
-        // Start after a delay
-        setTimeout(startCarousel, 1500);
+        // initial setup
+        function init() {
+          tagCards();
+          computeLoopWidth();
+
+          // center the first logical card (prefer first original instance)
+          const cards = getCards();
+          const candidates = cards.filter(
+            (c) => Number(c.dataset.logical) === 0
+          );
+          const chosen = candidates[0] || cards[0];
+          if (!chosen) return;
+          const r = chosen.getBoundingClientRect();
+          const viewportCenter = getViewportCenterX();
+          currentTranslate = viewportCenter - (r.left + r.width / 2);
+          applyTranslate(false);
+          setActiveForLogical(0);
+
+          // start autoplay after small delay to ensure charm
+          setTimeout(startCarousel, 700);
+        }
+
+        // run initialization after layout and assets ready
+        requestAnimationFrame(() => waitForAssetsThenInit());
       })();
     </script>
+
     <script>
       (function () {
         const cards = Array.from(document.querySelectorAll(".faq-card"));
